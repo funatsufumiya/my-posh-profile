@@ -42,8 +42,12 @@
         {
           "foreground": "#BF616A",
           "style": "plain",
-          "template": " \u2717",
-          "type": "status"
+          "properties":
+          {
+            "fetch_status": true
+          },
+          "template": "{{ if .Working.Changed }} \u2717 {{ end }}{{ if .Staging.Changed }} \u2717 {{ end }}",
+          "type": "git"
         }
       ],
       "type": "prompt"
