@@ -1,7 +1,13 @@
 Set-Alias touch New-Item # touch command like linux
 Set-Alias vim nvim
 Set-Alias vi nvim
-Function mbash { nvim $PROFILE }
+
+Import-Module PSReadline
+Set-PSReadLineOption -EditMode Emacs
+
+Remove-Item -Force Alias:sl
+function sl { sl.exe }
+function mbash { nvim $PROFILE }
 
 function ln([switch] $s, [string] $filePath, [string] $symlink) {
     if ($s) {
