@@ -1,3 +1,5 @@
+Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+
 Set-Alias touch New-Item # touch command like linux
 Set-Alias vim nvim
 Set-Alias vi nvim
@@ -8,7 +10,7 @@ Set-PSReadLineOption -EditMode Emacs
 Remove-Item -Force Alias:sl
 function sl { sl.exe }
 function mbash { nvim $PROFILE }
-function sbash { . $PROFILE }
+function sbash { refreshenv; . $PROFILE }
 
 function ln([switch] $s, [string] $filePath, [string] $symlink) {
     if ($s) {
@@ -17,6 +19,10 @@ function ln([switch] $s, [string] $filePath, [string] $symlink) {
     else {
         New-Item -ItemType HardLink -Value $filePath -Path $symlink | Out-Null
     }
+}
+
+function cht.sh([string] $s) {
+    curl.exe cht.sh/$s
 }
 
 # oh-my-posh theme
