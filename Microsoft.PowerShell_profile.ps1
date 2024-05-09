@@ -1,6 +1,7 @@
 Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 
-Set-Alias touch New-Item # touch command like linux
+# Set-Alias touch New-Item # touch command like linux
+
 Set-Alias vim nvim
 Set-Alias vi nvim
 
@@ -11,6 +12,18 @@ Remove-Item -Force Alias:sl
 function sl { sl.exe }
 function mbash { nvim $PROFILE }
 function sbash { refreshenv; . $PROFILE }
+
+function touch([string] $filePath) {
+    # if exists, make it update
+    # if not exists, make it create
+    
+    if (Test-Path $filePath) {
+        (Get-Item $filePath).LastWriteTime = Get-Date
+    }
+    else {
+        New-Item -ItemType File -Path $filePath | Out-Null
+    }
+}
 
 function ln([switch] $s, [string] $filePath, [string] $symlink) {
     if ($s) {
